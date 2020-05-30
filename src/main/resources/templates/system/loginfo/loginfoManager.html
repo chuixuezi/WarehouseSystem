@@ -31,13 +31,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label">登陆地址</label>
                 <div class="layui-input-inline">
-                    <input type="tel" name="loginip" autocomplete="off" class="layui-input">
+                    <input type="text" name="loginip" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">开始时间</label>
                 <div class="layui-input-inline">
-                    <input type="tel" name="startTime" id="startTime" readonly="readonly"
+                    <input type="text" name="startTime" id="startTime" readonly="readonly"
                            placeholder="yyyy-MM-dd HH:mm:ss"
                            class="layui-input">
                 </div>
@@ -114,7 +114,18 @@
                 , {field: 'logintime',align:'center'}
                 , {fixed: 'right', title: '操作', toolbar: '#loginfoRowBar',align:'center'}
             ] ]
-        })
+        });
+
+        //模糊查询
+        form.on("submit(doSearch)",function (data) {
+            tableIns.reload({
+                where:data.field,
+                page:{
+                    curr:1
+                }
+            });
+            return false;
+        });
     });
 </script>
 </body>
