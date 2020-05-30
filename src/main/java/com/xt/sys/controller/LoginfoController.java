@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xt.sys.common.DataGridView;
+import com.xt.sys.common.ResultObj;
 import com.xt.sys.domain.Loginfo;
 import com.xt.sys.service.LoginfoService;
 import com.xt.sys.vo.LoginfoVo;
@@ -49,6 +50,37 @@ public class LoginfoController {
         this.loginfoService.page(page, queryWrapper);
         return new DataGridView(page.getTotal(), page.getRecords());
 
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("deleteLoginfo")
+    public ResultObj deleteLoginfo(Integer id){
+        try {
+            this.loginfoService.removeById(id);
+            return ResultObj.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObj.DELETE_ERROR;
+        }
+    }
+
+    /**
+     * 删除
+     * @param loginfoVo
+     * @return
+     */
+    @RequestMapping("batchDeleteLoginfo")
+    public ResultObj batchDeleteLoginfo(LoginfoVo loginfoVo){
+        try {
+            return ResultObj.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObj.DELETE_ERROR;
+        }
     }
 }
 
