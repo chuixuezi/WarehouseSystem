@@ -1,7 +1,6 @@
 package com.xt.sys.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -23,17 +22,30 @@ public class SystemController {
     }
 
     /**
-     * 跳转到工作台
-     * @return
+     *
+     * @return 跳转到工作台
      */
     @RequestMapping("/toDeskManager")
     public String toDeskManager(){
         return "system/index/deskManager";
     }
 
+    /**
+     *
+     * @return 跳转到日志管理
+     */
     @RequestMapping("/toLoginfoManager")
     public String toLoginfoManager(){
         return "system/loginfo/loginfoManager";
+    }
+
+    /**
+     *
+     * @return 跳转到公告管理
+     */
+    @RequestMapping("/toNoticeManager")
+    public String toNoticeManager(){
+        return "system/notice/noticeManager";
     }
 
 }
