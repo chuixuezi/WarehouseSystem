@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * <p>
  * 前端控制器
@@ -69,13 +73,18 @@ public class LoginfoController {
     }
 
     /**
-     * 删除
+     * 批量删除
      * @param loginfoVo
      * @return
      */
     @RequestMapping("batchDeleteLoginfo")
     public ResultObj batchDeleteLoginfo(LoginfoVo loginfoVo){
         try {
+            Collection<Serializable> idList=new ArrayList<>();
+            for (Integer id : loginfoVo.getIds()) {
+                idList.add(id);
+            }
+            this.loginfoService.removeByIds(idList);
             return ResultObj.DELETE_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();

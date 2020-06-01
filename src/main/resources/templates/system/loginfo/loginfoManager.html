@@ -69,12 +69,12 @@
 <div>
     <table class="layui-hide" id="LoginfoTable" lay-filter="LoginfoTable"></table>
     <div id="loginfoToolBar" style="display: none;">
-        <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-submit="" lay-filter="doSearch"><span
+        <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-sm layui-btn-danger" lay-submit="" lay-filter="doSearch"><span
                 class="layui-icon layui-icon-delete"></span>批量删除
         </button>
     </div>
     <div id="loginfoRowBar" style="display: none;">
-        <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" lay-submit="" lay-filter="doSearch"><span
+        <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger" lay-submit="" lay-filter="doSearch"><span
                 class="layui-icon layui-icon-delete"></span>删除
         </button>
     </div>
@@ -126,6 +126,60 @@
             });
             return false;
         });
+
+        //监听头工具事件
+        table.on('toolbar(LoginfoTable)', function(obj){
+            switch(obj.event){
+                case 'batchDelete':
+                    batchDelete();
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(LoginfoTable)', function(obj){
+            switch(obj.event){
+                case 'delete':
+                    deleteInfo();
+                    break;
+            };
+        });
+
+        //删除
+        function deleteInfo() {
+
+        }
+
+
+        //批量删除
+        function batchDelete() {
+            //得到选中行数据
+            var checkStatus= table.checkStatus('LoginfoTable');
+            var dataLength=checkStatus.data.length;
+            if (dataLength>0){
+                layer.confirm('你确定要删除这些数据嘛',{icon:3,title:'提示'},function(index){
+                    var data=checkStatus.data;//获取选中行得数据
+                    var ids="";
+                    $.each(data,function (index,item) {
+                        if(index==0){
+                            ids+="ids="+item.id;
+                        }else{
+                            ids+="&ids="+item.id;
+                        }
+                    });
+                    // alert(ids);
+                    $.post("/loginfo/batchDeleteLoginfo",ids,function (res) {
+                        if(res.code==200){
+                            tableIns.reload();
+                        }
+                        layer.msg(res.msg);
+                    })
+                    layer.close(index);
+                })
+            }else {
+                layer.msg("请选中操作行");
+            }
+        }
     });
 </script>
 </body>
