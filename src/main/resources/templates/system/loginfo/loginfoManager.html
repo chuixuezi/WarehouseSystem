@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -108,14 +108,16 @@
             , title: '用户登陆日志数据表'
             , height: 'full-230'
             , page: true
-            , cols:[[
-                {type: 'checkbox', fixed: 'left', align: 'center'}
-                ,{field: 'id', title: 'ID', align: 'center'}
-                ,{field: 'loginname', align: 'center'}
-                ,{field: 'loginip', align: 'center'}
-                ,{field: 'logintime', align: 'center'}
-                ,{fixed: 'right', title: '操作', toolbar: '#loginfoRowBar', align: 'center'}
-            ]]
+            , cols: [//因为[   []  ]之间的表达式在thymeleaf被认为是内联表达式,所以渲染错误
+                [
+                    {type: 'checkbox', fixed: 'left', align: 'center'}
+                    , {field: 'id', title: 'ID', align: 'center'}
+                    , {field: 'loginname', align: 'center'}
+                    , {field: 'loginip', align: 'center'}
+                    , {field: 'logintime', align: 'center'}
+                    , {fixed: 'right', title: '操作', toolbar: '#loginfoRowBar', align: 'center'}
+                ]
+            ]
         });
 
         //模糊查询
