@@ -32,7 +32,7 @@ public class MenuController {
 
     /**
      * @param permissionVo
-     * @return
+     * @return 加载菜单
      */
     @RequestMapping("loadIndexLeftMenuJson")
     public DataGridView loadIndexLeftMenuJson(PermissionVo permissionVo) {

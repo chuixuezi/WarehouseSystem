@@ -57,9 +57,9 @@ public class LoginfoController {
     }
 
     /**
-     * 删除
+     *
      * @param id
-     * @return
+     * @return 删除
      */
     @RequestMapping("deleteLoginfo")
     public ResultObj deleteLoginfo(Integer id){
@@ -73,9 +73,9 @@ public class LoginfoController {
     }
 
     /**
-     * 批量删除
+     *
      * @param loginfoVo
-     * @return
+     * @return 批量删除
      */
     @RequestMapping("batchDeleteLoginfo")
     public ResultObj batchDeleteLoginfo(LoginfoVo loginfoVo){
