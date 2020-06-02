@@ -48,4 +48,26 @@ public class SystemController {
         return "system/notice/noticeManager";
     }
 
+
+    /**
+     * @return 跳转到部门管理
+     */
+    @RequestMapping("toDeptManager")
+    public String toDeptManager(){
+        return "system/dept/deptManager";
+    }
+    /**
+     * @return 跳转到部门管理左页面
+     */
+    @RequestMapping("toDeptLeft")
+    public String toDeptLeft(){
+        return "system/dept/deptLeft";
+    }
+    /**
+     * @return 跳转到部门管理右页面
+     */
+    @RequestMapping("toDeptRight")
+    public String toDeptRight(){
+        return "system/dept/deptRight";
+    }
 }
