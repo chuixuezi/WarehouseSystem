@@ -251,21 +251,21 @@
         })
 
 
-        //添加和修改的提交
-        form.on("submit(doSubmit)",function (data) {
-            //同步富文本和textarea
-            layedit.sync(editIndex);
-            $.post(url,data.field,function (res) {
-                if(res.code==200){
-                    tableIns.reload();
-                }
-                layer.msg(res.msg);
-                layer.close(mainIndex);
-
-            })
-
-            return false;
-        })
+        // //添加和修改的提交
+        // form.on("submit(doSubmit)",function (data) {
+        //     //同步富文本和textarea
+        //     layedit.sync(editIndex);
+        //     $.post(url,data.field,function (res) {
+        //         if(res.code==200){
+        //             tableIns.reload();
+        //         }
+        //         layer.msg(res.msg);
+        //         layer.close(mainIndex);
+        //
+        //     })
+        //
+        //     return false;
+        // })
         //删除
         function deleteInfo(data) {
             layer.confirm('你确定要删除这些数据嘛', {icon: 3, title: '提示'}, function (index) {

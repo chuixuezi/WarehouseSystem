@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan(basePackages ={"com.xt.sys.mapper"})
-public class LayuicmsMbApplication {
+public class WarehouseSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LayuicmsMbApplication.class, args);
+        SpringApplication.run(WarehouseSystemApplication.class, args);
     }
 
 }
