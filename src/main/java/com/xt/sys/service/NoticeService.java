@@ -2,6 +2,7 @@ package com.xt.sys.service;
 
 import com.xt.sys.domain.Notice;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xt.sys.vo.NoticeVo;
 
 /**
  * <p>

@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;">
-            <button type="button" class="layui-btn" id="doSubmit" lay-submit="" lay-filter="doSubmit"><span
+            <button type="button" class="layui-btn" id="doSubmit"><span
                     class="layui-icon layui-icon-add-1"></span>发布
             </button>
             <button type="reset" class="layui-btn layui-btn-warm"><span
@@ -118,6 +118,19 @@
 </div>
 
 <!--添加和修改的弹出层结束-->
+
+
+<!--查看的弹出层开始-->
+<div style="display: none;" id="showNoticeDiv">
+    <h2 id="show_title" align="center"></h2>
+    <div style="text-align: right;">
+        发布人:<span id="show_opername"></span>
+        发布时间:<span id="show_createtime"></span>
+    </div>
+    <div id="show_content"></div>
+    <hr>
+</div>
+<!--查看的弹出层结束-->
 
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
@@ -193,10 +206,10 @@
                     openUpdateNoticeLayer(data);
                     break;
                 case 'delete':
-                    deleteInfo(data);
+                    deleteNotice(data);
                     break;
                 case 'show':
-                    deleteInfo(data);
+                    showNotice(data);
                     break;
             }
         });
@@ -267,10 +280,10 @@
         //     return false;
         // })
         //删除
-        function deleteInfo(data) {
-            layer.confirm('你确定要删除这些数据嘛', {icon: 3, title: '提示'}, function (index) {
+        function deleteNotice(data) {
+            layer.confirm('你确定要删除['+data.title+']这条公告嘛', {icon: 3, title: '提示'}, function (index) {
                 // alert(ids);
-                $.post("/notice/deletenotice", {id: data.id}, function (res) {
+                $.post("/notice/deleteNotice", {id: data.id}, function (res) {
                     if (res.code == 200) {
                         tableIns.reload();
                     }
@@ -287,7 +300,7 @@
             var checkStatus = table.checkStatus('noticeTable');
             var dataLength = checkStatus.data.length;
             if (dataLength > 0) {
-                layer.confirm('你确定要删除这些数据嘛', {icon: 3, title: '提示'}, function (index) {
+                layer.confirm('你确定要删除这些公告嘛', {icon: 3, title: '提示'}, function (index) {
                     var data = checkStatus.data;//获取选中行得数据
                     var ids = "";
                     $.each(data, function (index, item) {
@@ -298,7 +311,7 @@
                         }
                     });
                     // alert(ids);
-                    $.post("/notice/batchDeletenotice", ids, function (res) {
+                    $.post("/notice/batchDeleteNotice", ids, function (res) {
                         if (res.code == 200) {
                             tableIns.reload();
                         }
@@ -310,7 +323,19 @@
                 layer.msg("请选中操作行");
             }
         }
-    });
+        //弹出查看层
+        function showNotice(data) {
+            mainIndex=layer.open({
+                type:1,
+                content:$("#showNoticeDiv"),
+                area:['800px','600px'],
+                title:'查看公告',
+                success:function () {
+                    $("#show_title").html(data.title);
+                }
+            })
+        }
+    }); 
 </script>
 </body>
 </html>

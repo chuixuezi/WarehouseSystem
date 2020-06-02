@@ -153,7 +153,7 @@
 
         //删除
         function deleteInfo(data) {
-            layer.confirm('你确定要删除这些数据嘛', {icon: 3, title: '提示'}, function (index) {
+            layer.confirm('你确定要删除这条数据嘛', {icon: 3, title: '提示'}, function (index) {
                 // alert(ids);
                 $.post("/loginfo/deleteLoginfo", {id: data.id}, function (res) {
                     if (res.code == 200) {
