@@ -22,6 +22,7 @@
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
+    var deptTree;
     layui.extend({
         dtree: '/resources/layui_ext/dtree/dtree'   // {/}的意思即代表采用自有路径，即不跟随 base 路径
     }).use(['dtree', 'layer', 'jquery'], function () {
@@ -29,35 +30,20 @@
         var layer = layui.layer;
         $ = layui.jquery;
 
-        var data = {
-            status: {code: 200, message: "操作成功"},
-            data: [
-                {id: "001", title: "湖南省", parentId: "0"},
-                {id: "002", title: "湖北省", parentId: "0"},
-                {id: "003", title: "广东省", parentId: "0"},
-                {id: "004", title: "浙江省", parentId: "0"},
-                {id: "005", title: "福建省", parentId: "0"},
-                {id: "001001", title: "长沙市", parentId: "001"},
-                {id: "001002", title: "株洲市", parentId: "001"},
-                {id: "001003", title: "湘潭市", parentId: "001"},
-                {id: "001004", title: "衡阳市", parentId: "001"},
-                {id: "001005", title: "郴州市", parentId: "001"}
-            ]
-        };
 
         // 初始化树
-        var deptTree = dtree.render({
+        deptTree = dtree.render({
             elem: "#deptTree",
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
             dataFormat: "list",  //配置data的风格为list
-            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
-            data: data.data
-            // url: "/resources/layui_ext/dtree.json" // 使用url加载（可与data加载同时存在）
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
+            url: "/dept/loadDeptManagerLeftTreeJson" // 使用url加载（可与data加载同时存在）
         });
 
         // 绑定节点点击
-        dtree.on("node('demoTree')", function (obj) {
-            layer.msg(JSON.stringify(obj.param));
+        dtree.on("node('deptTree')", function (obj) {
+            // layer.msg(JSON.stringify(obj.param));
+            window.parent.right.reloadTable(obj.param.nodeId);
         });
     });
 </script>
