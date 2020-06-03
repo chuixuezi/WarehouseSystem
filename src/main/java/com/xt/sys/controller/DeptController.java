@@ -117,5 +117,36 @@ public class DeptController {
         }
         return map;
     }
+
+    //检查当前id的部门有么有子部门
+    @RequestMapping("checkDeptHasChildrenNode")
+    public Map<String,Object> checkDeptHasChildrenNode(DeptVo deptVo){
+        Map<String ,Object> map=new HashMap<>();
+        QueryWrapper<Dept> queryWrapper= new QueryWrapper<>();
+        queryWrapper.eq("pid",deptVo.getId());
+        List<Dept> list = this.deptService.list(queryWrapper);
+        if(list.size()>0){
+            map.put("value",true);
+        }else {
+            map.put("value",false);
+        }
+        return map;
+    }
+
+
+    /**
+     * @param deptVo
+     * @return 删除部门
+     */
+    @RequestMapping("deleteDept")
+    public ResultObj deleteDept(DeptVo deptVo){
+        try{
+            this.deptService.removeById(deptVo.getId());
+            return ResultObj.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObj.DELETE_ERROR;
+        }
+    }
 }
 
