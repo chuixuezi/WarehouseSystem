@@ -6,6 +6,7 @@ import com.xt.sys.mapper.DeptMapper;
 import com.xt.sys.service.DeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
@@ -18,6 +19,7 @@ import java.io.Serializable;
  * @since 2020-06-02
  */
 @Service
+@Transactional
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     @Override
