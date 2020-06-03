@@ -83,7 +83,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父级部门</label>
             <div class="layui-input-block">
-                <input type="hidden" name="pid" id="pid">
+                <input type="hidden" name="pid" lay-verify="required" id="pid">
                 <ul id="deptTree" class="dtree" data-id="0"></ul>
             </div>
         </div>
@@ -113,7 +113,8 @@
             <label class="layui-form-label">排序码</label>
             <div class="layui-input-inline">
                 <input type="hidden" name="id">
-                <input type="text" name="ordernum" id="ordernum" lay-verify="required|number" autocomplete="off" placeholder="请输入排序码[>0]"
+                <input type="text" name="ordernum" id="ordernum" lay-verify="required|number" autocomplete="off"
+                       placeholder="请输入排序码[>0]"
                        class="layui-input">
             </div>
         </div>
@@ -130,7 +131,7 @@
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;">
-            <button type="button" class="layui-btn" id="doSubmit"><span
+            <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit"><span
                     class="layui-icon layui-icon-add-1"></span>发布
             </button>
             <button type="reset" class="layui-btn layui-btn-warm" id="doReset"><span
@@ -233,9 +234,11 @@
                 title: '添加部门',
                 success: function () {
                     $("#dataFrm")[0].reset();
+                    $("#pid").val("");
+
                     url = "/dept/addDept";
                     //初始化排序码
-                    $.get("/dept/loadDeptMaxOrderNum",function (res) {
+                    $.get("/dept/loadDeptMaxOrderNum", function (res) {
                         $('#ordernum').val(res.value);
                     })
                 }
@@ -255,9 +258,9 @@
 
                     //选中父级部门 nodeId=data.pid;
 
-                    dtree.dataInit("deptTree", data.pid);
+                    dtree.dataInit("deptTree",data.pid);
                     // 也可以在这里指定，第二个参数如果不填，则会自动返显当前选中的数据
-                    dtree.setSelectValue("deptTree");
+                    dtree.setSelectValue("deptTree",data.pid==0?"":data.title);
 
                     url = "/dept/updateDept";
 
@@ -266,9 +269,11 @@
         }
 
         //添加和修改的提交
-        $('#doSubmit').click(function () {
-            var data = $('#dataFrm').serialize();
-            $.post(url, data, function (res) {
+
+        form.on("submit(doSubmit)", function (data) {
+            // alert(data.field);
+            // alert(data.field.pid);
+            $.post(url, data.field, function (res) {
                 if (res.code == 200) {
                     tableIns.reload();
                     //刷新dtree组件
@@ -277,18 +282,16 @@
                 }
                 layer.msg(res.msg);
                 layer.close(mainIndex);
-
             })
-
             return false;
         })
 
         //删除
         function deleteDept(data) {
-            $.post("/dept/checkDeptHasChildrenNode",{id:data.id},function (resoult) {
-                if(resoult.value){
+            $.post("/dept/checkDeptHasChildrenNode", {id: data.id}, function (resoult) {
+                if (resoult.value) {
                     layer.msg("当前部门有子部门,请先删除子部门");
-                }else {
+                } else {
                     layer.confirm('你确定要删除[' + data.title + ']这条部门嘛', {icon: 3, title: '提示'}, function (index) {
                         // alert(ids);
                         $.post("/dept/deleteDept", {id: data.id}, function (res) {
@@ -315,12 +318,12 @@
             width: '100%',
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
             dataFormat: "list",  //配置data的风格为list
-            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
             url: "/dept/loadDeptManagerLeftTreeJson" // 使用url加载（可与data加载同时存在）
         });
 
         //监听点击的方法
-        dtree.on("node('deptTree')" ,function(obj){
+        dtree.on("node('deptTree')", function (obj) {
             $('#pid').val(obj.param.nodeId);
             // console.log(obj.param.nodeId); // 点击当前节点传递的参数
         });
@@ -332,8 +335,8 @@
             where: {
                 id: id
             },
-            page:{
-                curr:1
+            page: {
+                curr: 1
             }
         })
     }
